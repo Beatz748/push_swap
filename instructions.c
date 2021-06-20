@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-__int_b		b_swap(t_stack *stack)
+t__int_b	b_swap(t_stack *stack)
 {
 	t_bool	tmp;
 
@@ -16,7 +16,7 @@ __int_b		b_swap(t_stack *stack)
 	return (SUCCESS);
 }
 
-__int_b		b_rotate(t_stack **stack)
+t__int_b	b_rotate(t_stack **stack)
 {
 	t_stack	*last;
 	t_stack	*second;
@@ -29,13 +29,13 @@ __int_b		b_rotate(t_stack **stack)
 		last = last->down;
 	last->down = *stack;
 	(*stack)->up = last;
-	(*stack)->down =0x000;
+	(*stack)->down = 0x000;
 	second->up = 0x000;
 	*stack = second;
 	return (SUCCESS);
 }
 
-__int_b		b_reverse_rotate(t_stack **stack)
+t__int_b	b_reverse_rotate(t_stack **stack)
 {
 	t_stack	*last;
 	t_stack	*prev_last;
@@ -47,14 +47,27 @@ __int_b		b_reverse_rotate(t_stack **stack)
 		last = last->down;
 	last->down = *stack;
 	prev_last = last->up;
-	prev_last->down= 0x000;
+	prev_last->down = 0x000;
 	last->up = NULL;
 	(*stack)->up = last;
 	*stack = last;
 	return (SUCCESS);
 }
 
-__int_b		b_push(t_stack **stack_from, t_stack **stack_into)
+t__int_b	b_push_util(t_stack **stack_from, t_stack **stack_into)
+{
+	t_stack	*second_from;
+	t_stack	*second_into;
+
+	second_from = (*stack_from)->down;
+	*stack_into = *stack_from;
+	(*stack_into)->down = 0x000;
+	*stack_from = second_from;
+	(*stack_from)->up = 0x000;
+	return (SUCCESS);
+}
+
+t__int_b	b_push(t_stack **stack_from, t_stack **stack_into)
 {
 	int		ret;
 	t_stack	*second_from;
@@ -64,14 +77,7 @@ __int_b		b_push(t_stack **stack_from, t_stack **stack_into)
 	if (!*stack_from)
 		return (ERROR_MALLOC);
 	if (!*stack_into)
-	{
-		second_from = (*stack_from)->down;
-		*stack_into = *stack_from;
-		(*stack_into)->down = 0x000;
-		*stack_from = second_from;
-		(*stack_from)->up = 0x000;
-		return (SUCCESS);
-	}
+		return (b_push_util(stack_from, stack_into));
 	second_from = (*stack_from)->down;
 	second_into = (*stack_into);
 	(*stack_into) = *stack_from;

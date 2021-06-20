@@ -1,18 +1,8 @@
 #include "push_swap.h"
 
-__int_b			print_keep(t_stack *stack)
+t__int_b			iterator_stack(t_stack *stack, t__int_b order)
 {
-	while (stack)
-	{
-		printf("mark for %d is %d\n", stack->value, stack->keep_in);
-		stack = stack->down;
-	}
-	return (SUCCESS);
-}
-
-__int_b			iterator_stack(t_stack *stack, __int_b order)
-{
-	__int_b	iter;
+	t__int_b	iter;
 
 	iter = 0;
 	while (stack && stack->order != order)
@@ -23,9 +13,9 @@ __int_b			iterator_stack(t_stack *stack, __int_b order)
 	return (iter);
 }
 
-__int_b			keep_in_index(t_base *base, __int_b head)
+t__int_b			keep_in_index(t_base *base, t__int_b head)
 {
-	__int_b	index;
+	t__int_b	index;
 	t_stack	*a;
 	t_bool	circle;
 
@@ -55,11 +45,11 @@ __int_b			keep_in_index(t_base *base, __int_b head)
 	return (SUCCESS);
 }
 
-__int_b			count_pairs(t_stack *stack, t_stack *start)
+t__int_b			count_pairs(t_stack *stack, t_stack *start)
 {
 	t_stack	*current;
-	__int_b	pairs;
-	__int_b	index;
+	t__int_b	pairs;
+	t__int_b	index;
 
 	pairs = 1;
 	index = start->order;
@@ -78,12 +68,12 @@ __int_b			count_pairs(t_stack *stack, t_stack *start)
 	return (pairs);
 }
 
-__int_b			fin_head(t_stack *stack)
+t__int_b			fin_head(t_stack *stack)
 {
 	t_stack	*tmp;
-	__int_b	*pairs;
-	__int_b	i;
-	__int_b	max;
+	t__int_b	*pairs;
+	t__int_b	i;
+	t__int_b	max;
 
 	pairs = (int *)malloc(get_count_nums(stack) * sizeof(int));
 	i = 0;
@@ -106,10 +96,10 @@ __int_b			fin_head(t_stack *stack)
 	return (stack->order);
 }
 
-__int_b			edit_keep_in(t_base *base)
+t__int_b			edit_keep_in(t_base *base)
 {
-	__int_b	head;
-	__int_b	ret;
+	t__int_b	head;
+	t__int_b	ret;
 
 	head = fin_head(base->stack_a);
 	if ((ret = keep_in_index(base, head)))
@@ -127,20 +117,20 @@ void	print_commands(t_commands *cmds)
 	}
 }
 
-__int_b			is_sorted(t_stack *stack)
+t__int_b			is_sorted(t_stack *stack)
 {
 	while (stack && stack->down)
 	{
-		if (VALUE(stack) > VALUE_BELOW(stack))
+		if ((stack->value) > (stack->down->value))
 			return (NOT_SORTED);
 		stack = stack->down;
 	}
-	return (SORTED);
+	return (TRUE);
 }
 
-__int_b			find_max_order_stack(t_stack *stack)
+t__int_b			find_max_order_stack(t_stack *stack)
 {
-	__int_b	max;
+	t__int_b	max;
 
 	max = B_INT_MAX;
 	while (stack)
@@ -152,10 +142,10 @@ __int_b			find_max_order_stack(t_stack *stack)
 	return (max);
 }
 
-__int_b			find_near_order(t_stack *stack, __int_b target)
+t__int_b			find_near_order(t_stack *stack, t__int_b target)
 {
-	__int64_b	ret;
-	__int64_b	tmp;
+	t__int64_b	ret;
+	t__int64_b	tmp;
 	t_stack		*safe;
 
 	ret = B_INT64_MAX;
@@ -171,38 +161,9 @@ __int_b			find_near_order(t_stack *stack, __int_b target)
 	return (ret);
 }
 
-__int_b			paste_order(t_stack **stack, t_commands **cmds, __int_b near)
+t__int_b			count_true_rule(t_stack *stack)
 {
-	t_stack	*tmp;
-	__int_b	count_first;
-	__int_b	count_second;
-
-	count_first = 1;
-	count_second = 2;
-	tmp = *stack;
-	while (tmp && tmp->order != near)
-	{
-		tmp = tmp->down;
-		++count_first;
-	}
-	tmp = get_last(*stack);
-	while (tmp && tmp->order != near)
-	{
-		tmp = tmp->up;
-		++count_second;
-	}
-	if (count_second > count_first)
-		while (--count_first)
-			b_ra(stack, cmds);
-	else
-		while (--count_second)
-			b_rra(stack, cmds);
-	return (SUCCESS);
-}
-
-__int_b			count_true_rule(t_stack *stack)
-{
-	__int_b	count;
+	t__int_b	count;
 
 	count = 0;
 	while (stack)
@@ -216,8 +177,8 @@ __int_b			count_true_rule(t_stack *stack)
 
 t_bool			prepare_sa(t_base *base)
 {
-	__int_b	prev;
-	__int_b	new;
+	t__int_b	prev;
+	t__int_b	new;
 
 	prev = count_true_rule(base->stack_a);
 	b_swap(base->stack_a);
@@ -230,7 +191,7 @@ t_bool			prepare_sa(t_base *base)
 	return (FALSE);
 }
 
-__int_b			perform_sa(t_base *base)
+t__int_b			perform_sa(t_base *base)
 {
 	b_sa(&base->stack_a, &base->cmds);
 	edit_keep_in(base);
@@ -248,14 +209,14 @@ t_bool			find_false_keep(t_stack *stack)
 	return (FALSE);
 }
 
-t_steps			calculate_one(t_base *base, __int_b current)
+t_steps			calculate_one(t_base *base, t__int_b current)
 {
 	t_steps	step;
-	__int_b	i;
-	__int_b	i_a;
-	__int_b	near_order_a;
-	__int_b	count_b;
-	__int_b	count_a;
+	t__int_b	i;
+	t__int_b	i_a;
+	t__int_b	near_order_a;
+	t__int_b	count_b;
+	t__int_b	count_a;
 
 	b_bzero(&step, sizeof(t_steps));
 	near_order_a = find_near_order(base->stack_a, current);
@@ -324,8 +285,8 @@ t_steps			calculate_steps(t_base *base)
 	t_steps	right;
 	t_stack	*b;
 	t_stack	*a;
-	__int_b	i;
-	__int_b	max;
+	t__int_b	i;
+	t__int_b	max;
 
 	b = base->stack_b;
 	i = 0;
@@ -342,7 +303,7 @@ t_steps			calculate_steps(t_base *base)
 	return (right);
 }
 
-__int_b			do_r(t_base *base, t_steps current)
+t__int_b			do_r(t_base *base, t_steps current)
 {
 
 	while (current.rr--)
@@ -360,7 +321,7 @@ __int_b			do_r(t_base *base, t_steps current)
 	return (SUCCESS);
 }
 
-__int_b			perform_move(t_base *base)
+t__int_b			perform_move(t_base *base)
 {
 	t_steps	current;
 
@@ -369,7 +330,7 @@ __int_b			perform_move(t_base *base)
 	return (SUCCESS);
 }
 
-__int_b			sorting(t_base *base)
+t__int_b			sorting(t_base *base)
 {
 	int	ret;
 
@@ -395,12 +356,10 @@ __int_b			sorting(t_base *base)
 
 
 
-__int_b			fast_sort(t_base *base, int count_nums)
+t__int_b			fast_sort(t_base *base, int count_nums)
 {
 	int	ret;
 
-	if ((ret = set_order(&base->stack_a)))
-		return (ret);
 	if ((ret = edit_keep_in(base)))
 		return (ret);
 	if (count_nums == 2 || count_nums == 3)

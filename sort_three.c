@@ -1,10 +1,10 @@
 #include "push_swap.h"
 
-__int_b			sorting_two_three(t_base *base)
+t__int_b	sorting_two_three(t_base *base)
 {
-	__int_b	ret;
-	t_stack	*last;
-	t_stack	**stack;
+	t__int_b	ret;
+	t_stack		*last;
+	t_stack		**stack;
 
 	stack = &base->stack_a;
 	last = get_last(*stack);

@@ -41,3 +41,14 @@ char	*b_strdup(const char *src)
 	dest[i] = 0x000;
 	return (dest);
 }
+
+t__int_b	check_for_sorted(t_stack *stack)
+{
+	while (stack->down)
+	{
+		if (stack->value > stack->down->value)
+			return (SUCCESS);
+		stack = stack->down;
+	}
+	return (ALREADY_SORTED);
+}

@@ -3,7 +3,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 # define SUCCESS				0
 # define FAIL					1
@@ -80,7 +79,25 @@ t__int_b		add_number_to_stack(t_stack **stack, t__int64_b num);
 t__int_b		argtoi(char **argv, t_base *base);
 t__int_b		sorting_two_three(t_base *base);
 t__int_b		get_count_nums(t_stack *stack);
-t__int_b		set_order(t_stack **stack);
+t__int_b		edit_keep_in(t_base *base);
+t__int_b		keep_in_index(t_base *base, t__int_b head);
+t__int_b		max_order_stack(t_stack *stack);
+
+/*------------------------CALCULATING-------------------------*/
+
+t__int_b		sort_five(t_base *base);
+t__int_b		perform_move(t_base *base);
+t_bool			prepare_sa(t_base *base);
+t__int_b		perform_sa(t_base *base);
+t__int_b		is_sorted(t_stack *stack);
+t_bool			find_false_keep(t_stack *stack);
+t__int_b		count_true_rule(t_stack *stack);
+t_steps			calculate_steps(t_base *base);
+t__int_b		find_near_order(t_stack *stack, t__int_b target);
+t__int_b		add_rr_step(t__int_b *ib, t__int_b *ia, t_steps *step);
+t__int_b		add_rrr_step(int *ib, int *ia, t_steps *step, t_base *base);
+t__int_b		add_rx(int *addr_rx, int *iter);
+t__int_b		add_rrx(t__int_b *addr, int *count, int *iter);
 
 /*----------------------------UTILS----------------------------*/
 
@@ -89,6 +106,8 @@ void			b_print_stack(t_stack *stack);
 char			*b_strdup(const char *src);
 void			b_bzero(void *s, t__uint64_b n);
 t_stack			*get_last(t_stack *stack);
+void			print_commands(t_commands *cmds);
+size_t			ft_strlen(const char *s);
 
 /*--------------------------COMMANDS---------------------------*/
 

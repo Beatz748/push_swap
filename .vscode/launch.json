@@ -1,5 +1,16 @@
 {
 	"configurations": [
-	
+	{
+		"name": "(lldb) Launch",
+		"type": "cppdbg",
+		"request": "launch",
+		"program": "${workspaceFolder}/checker",
+		"args": [1 3 2],
+		"stopAtEntry": false,
+		"cwd": "${fileDirname}",
+		"environment": [],
+		"externalConsole": false,
+		"MIMode": "lldb"
+	}
 	]
 }

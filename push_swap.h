@@ -108,6 +108,7 @@ void			b_bzero(void *s, t__uint64_b n);
 t_stack			*get_last(t_stack *stack);
 void			print_commands(t_commands *cmds);
 size_t			ft_strlen(const char *s);
+int				get_next_line(int fd, char **line);
 
 /*--------------------------COMMANDS---------------------------*/
 

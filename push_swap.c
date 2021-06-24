@@ -1,5 +1,15 @@
 #include "push_swap.h"
 
+#include <stdio.h>
+t__int_b			print_keep(t_stack *stack)
+{
+	while (stack)
+	{
+		printf("mark for %d is %d\n", stack->value, stack->keep_in);
+		stack = stack->down;
+	}
+	return (SUCCESS);
+}
 t__int_b	do_r(t_base *base, t_steps current)
 {
 	while (current.rr--)
@@ -59,8 +69,6 @@ t__int_b	sort(t_base *base, int count_nums)
 		return (ret);
 	if (count_nums == 2 || count_nums == 3)
 		return (sorting_two_three(base));
-	if (count_nums <= 5)
-		return (sort_five(base));
 	else if (count_nums > 3)
 		return (sorting(base));
 	return (SUCCESS);
@@ -69,6 +77,7 @@ t__int_b	sort(t_base *base, int count_nums)
 int	main(int argc, char **argv)
 {
 	int		ret;
+	t_commands	*index;
 	t_base	*base;
 
 	base = (t_base *)malloc(sizeof(t_base));
@@ -79,10 +88,24 @@ int	main(int argc, char **argv)
 	base->cmds = NULL;
 	if (argc < MINIMUM_NUM_ARGS)
 		return (write_error(ENTER_ARGUMENT));
-	ret = argtoi(++argv, base);
+	ret = argtoi(argv + 1, base);
 	if (ret)
 		return (write_error(ret));
 	ret = check_for_sorted(base->stack_a);
+	if (ret)
+		return (write_error(ret));
+	base->method = index_method;
+	base->pairs = count_pairs_index;
+	ret = sort(base, argc - 1);
+	if (ret)
+		return (write_error(ret));
+	index = base->cmds;
+	base->cmds = NULL;
+	base->stack_a = NULL;
+	base->stack_b = NULL;
+	base->method = gt_method;
+	base->pairs = count_pairs_gt;
+	ret = argtoi(argv + 1, base);
 	if (ret)
 		return (write_error(ret));
 	ret = sort(base, argc - 1);

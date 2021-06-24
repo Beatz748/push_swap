@@ -7,10 +7,10 @@ t_bool	prepare_sa(t_base *base)
 
 	prev = count_true_rule(base->stack_a);
 	b_swap(base->stack_a);
-	keep_in_index(base, base->head);
+	keep_in_index(base->stack_a, base->head, base);
 	new = count_true_rule(base->stack_a);
 	b_swap(base->stack_a);
-	keep_in_index(base, base->head);
+	keep_in_index(base->stack_a, base->head, base);
 	if (new > prev)
 		return (TRUE);
 	return (FALSE);

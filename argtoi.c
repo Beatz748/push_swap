@@ -54,14 +54,14 @@ t__int_b	add_number_to_stack(t_stack **stack, t__int64_b num)
 	return (add_last(stack, num, tmp, order));
 }
 
-static t__int_b	argtoi_util(char **argv, t__int64_b *num, t__int_b *flag)
+static t__int_b	argtoi_util(char **argv, t__int64_b *num, t__int_b *flag, int *j)
 {
 	*num = 0;
 	*flag = 1;
-	if (**argv == '-')
+	if (*argv[*j] == '-')
 	{
 		*flag = 0;
-		++(*argv);
+		++*j;
 	}
 	return (SUCCESS);
 }
@@ -70,23 +70,27 @@ t__int_b	argtoi(char **argv, t_base *base)
 {
 	t__int64_b	num;
 	t__int_b	flag;
+	t__int_b	i;
+	t__int_b	j;
 
-	while (*argv)
+	i = 0;
+	while (argv[i])
 	{
-		argtoi_util(argv, &num, &flag);
-		while (**argv >= 0x030 && **argv <= 0x039)
+		j = 0;
+		argtoi_util(argv, &num, &flag, &j);
+		while (argv[i][j] >= 0x030 && argv[i][j] <= 0x039)
 		{
 			if (num > B_INT64_MAX)
 				return (INVALID_ARG);
-			num = num * 10 + **argv - 0x030;
-			++(*argv);
+			num = num * 10 + argv[i][j] - 0x030;
+			++j;
 		}
-		if (**argv)
+		if (argv[i][j])
 			return (INVALID_ARG);
 		if (flag == 0)
 			num = ~(num - MINUS);
 		add_number_to_stack(&base->stack_a, num);
-		++argv;
+		++i;
 	}
 	return (SUCCESS);
 }

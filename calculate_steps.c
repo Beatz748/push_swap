@@ -44,17 +44,17 @@ static t_steps	calculate_one(t_base *base, t__int_b current)
 
 	init_calc_iter(base, &current, &ia, &ib);
 	init_calc_count(base, &step, &count_a, &count_b);
-	if (ib < (count_b / 2) && (ia < count_a / 2))
+	if (ib <= (count_b / 2) && (ia <= count_a / 2))
 		add_rr_step(&ib, &ia, &step);
 	if (ib > (count_b / 2) && (ia > count_a / 2))
 		add_rrr_step(&ib, &ia, &step, base);
-	if (ib < (count_b / 2))
+	if (ib <= (count_b / 2))
 		add_rx(&step.rb, &ib);
-	if (ia < (count_a / 2))
+	if (ia <= (count_a / 2))
 		add_rx(&step.ra, &ia);
-	if (ib >= (count_b / 2))
+	if (ib > (count_b / 2))
 		add_rrx(&step.rrb, &count_b, &ib);
-	if (ia >= (count_a / 2))
+	if (ia > (count_a / 2))
 		add_rrx(&step.rra, &count_a, &ia);
 	step.res = step.ra + step.rb + step.rr + step.rrr + step.rra + step.rrb;
 	step.order = current;

@@ -57,6 +57,8 @@ typedef struct s_base
 	t__int64_b		head;
 	t_stack			*stack_b;
 	t_commands		*cmds;
+	int				(*method)(t_stack *, t__int_b *);
+	int				(*pairs)(t_stack *, t_stack *);
 }				t_base;
 
 typedef struct s_teps
@@ -80,8 +82,11 @@ t__int_b		argtoi(char **argv, t_base *base);
 t__int_b		sorting_two_three(t_base *base);
 t__int_b		get_count_nums(t_stack *stack);
 t__int_b		edit_keep_in(t_base *base);
-t__int_b		keep_in_index(t_base *base, t__int_b head);
+t__int_b		keep_in_index(t_stack *stack, t__int_b head, t_base *base);
+t__int_b		keep_in_gt(t_stack *stack, t__int_b head);
 t__int_b		max_order_stack(t_stack *stack);
+t__int_b		gt_method(t_stack *a, t__int_b *index);
+t__int_b		count_pairs_gt(t_stack *stack, t_stack *start);
 
 /*------------------------CALCULATING-------------------------*/
 
@@ -98,6 +103,10 @@ t__int_b		add_rr_step(t__int_b *ib, t__int_b *ia, t_steps *step);
 t__int_b		add_rrr_step(int *ib, int *ia, t_steps *step, t_base *base);
 t__int_b		add_rx(int *addr_rx, int *iter);
 t__int_b		add_rrx(t__int_b *addr, int *count, int *iter);
+t__int_b		find_head_index(t_stack *stack, t_base *base);
+t__int_b		find_head_gt(t_stack *stack);
+t__int_b		count_pairs_index(t_stack *stack, t_stack *start);
+t__int_b		index_method(t_stack *a, t__int_b *index);
 
 /*----------------------------UTILS----------------------------*/
 

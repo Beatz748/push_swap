@@ -1,6 +1,35 @@
 #include "push_swap.h"
 
 #include <stdio.h>
+
+t__int_b			what_choose(t_commands	*gt, t_commands *index)
+{
+	t__int_b	gt_i;
+	t__int_b	index_i;
+	t_commands	*index_begin;
+	t_commands	*gt_begin;
+
+	index_begin = index;
+	gt_begin = gt;
+	index_i = 0;
+	gt_i = 0;
+	while (gt)
+	{
+		gt = gt->next;
+		++gt_i;
+	}
+	while (index)
+	{
+		index = index->next;
+		++index_i;
+	}
+	if (index_i > gt_i)
+		print_commands(gt_begin);
+	else
+		print_commands(index_begin);
+	return (SUCCESS);
+
+}
 t__int_b			print_keep(t_stack *stack)
 {
 	while (stack)
@@ -111,6 +140,8 @@ int	main(int argc, char **argv)
 	ret = sort(base, argc - 1);
 	if (ret)
 		return (write_error(ret));
-	print_commands(base->cmds);
+	what_choose(base->cmds, index);
+	// print_commands(base->cmds);
+	// print_commands(index);
 	return (SUCCESS);
 }

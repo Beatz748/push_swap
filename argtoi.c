@@ -54,11 +54,11 @@ t__int_b	add_number_to_stack(t_stack **stack, t__int64_b num)
 	return (add_last(stack, num, tmp, order));
 }
 
-static t__int_b	argtoi_util(char **argv, t__int64_b *num, t__int_b *flag, int *j)
+static t__int_b	argtoi_util(char *argv, t__int64_b *num, t__int_b *flag, int *j)
 {
 	*num = 0;
 	*flag = 1;
-	if (*argv[*j] == '-')
+	if (argv[*j] == '-')
 	{
 		*flag = 0;
 		++*j;
@@ -77,7 +77,7 @@ t__int_b	argtoi(char **argv, t_base *base)
 	while (argv[i])
 	{
 		j = 0;
-		argtoi_util(argv, &num, &flag, &j);
+		argtoi_util(argv[i], &num, &flag, &j);
 		while (argv[i][j] >= 0x030 && argv[i][j] <= 0x039)
 		{
 			if (num > B_INT64_MAX)

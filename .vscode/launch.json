@@ -1,16 +1,23 @@
 {
 	"configurations": [
 	{
-		"name": "(lldb) Launch",
+		"name": "(gdb) Launch",
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "${workspaceFolder}/push_swap",
-		"args": [1 4 2 5 3],
+		"args": [-2147 2100 220010 -1 7 210815 121],
 		"stopAtEntry": false,
 		"cwd": "${fileDirname}",
 		"environment": [],
 		"externalConsole": false,
-		"MIMode": "lldb"
+		"MIMode": "gdb",
+		"setupCommands": [
+			{
+				"description": "Enable pretty-printing for gdb",
+				"text": "-enable-pretty-printing",
+				"ignoreFailures": true
+			}
+		]
 	}
 	]
 }

@@ -14,7 +14,7 @@ t__int_b	index_method(t_stack *a, t__int_b *index)
 
 t__int_b	gt_method(t_stack *a, t__int_b *num)
 {
-	if (a->order > *num)
+	if (a->order >= *num)
 	{
 		(*num) = a->order;
 		a->keep_in = TRUE;

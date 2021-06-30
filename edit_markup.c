@@ -1,32 +1,5 @@
 #include "push_swap.h"
 
-t__int_b	index_method(t_stack *a, t__int_b *index)
-{
-	if (a->order == *index)
-	{
-		++(*index);
-		a->keep_in = TRUE;
-	}
-	else
-		a->keep_in = FALSE;
-	return (SUCCESS);
-}
-
-t__int_b	gt_method(t_stack *a, t__int_b *num)
-{
-	if (a->order >= *num)
-	{
-		(*num) = a->order;
-		a->keep_in = TRUE;
-	}
-	else
-	{
-		(*num) = B_INT_MAX;
-		a->keep_in = FALSE;
-	}
-	return (SUCCESS);
-}
-
 t__int_b	keep_in_index(t_stack *stack, t__int_b head, t_base *base)
 {
 	t__int_b	index;
@@ -53,52 +26,22 @@ t__int_b	keep_in_index(t_stack *stack, t__int_b head, t_base *base)
 	return (SUCCESS);
 }
 
-t__int_b	count_pairs_index(t_stack *stack, t_stack *start)
+t__int_b	head_util(t__int_b *i, t__int_b *max, t__int_b *head)
 {
-	t_stack		*current;
-	t__int_b	pairs;
-	t__int_b	index;
-
-	pairs = 1;
-	index = start->order;
-	current = start->down;
-	while (current && current->order != start->order)
-	{
-		if (current->order == index + 1)
-		{
-			++index;
-			++pairs;
-		}
-		current = current->down;
-		if (!current)
-			current = stack;
-	}
-	return (pairs);
+	*i = 0;
+	*max = 0;
+	*head = B_INT_MAX;
+	return (SUCCESS);
 }
 
-t__int_b	count_pairs_gt(t_stack *stack, t_stack *start)
+t__int_b	head_util2(t_stack *stack, t__int_b max)
 {
-	t_stack		*current;
-	t__int_b	pairs;
-	t__int_b	num;
-
-	pairs = 1;
-	num = start->order;
-	current = start->down;
-	while (current && current->order != start->order)
+	while (max)
 	{
-		if (current->order > num)
-		{
-			num = current->order;
-			++pairs;
-		}
-		else
-			num = B_INT_MAX;
-		current = current->down;
-		if (!current)
-			current = stack;
+		stack = stack->down;
+		--max;
 	}
-	return (pairs);
+	return (stack->order);
 }
 
 t__int_b	find_head_index(t_stack *stack, t_base *base)
@@ -107,26 +50,25 @@ t__int_b	find_head_index(t_stack *stack, t_base *base)
 	t__int_b	*pairs;
 	t__int_b	i;
 	t__int_b	max;
+	t__int_b	head;
 
 	pairs = (int *)malloc(get_count_nums(stack) * sizeof(int));
-	i = 0;
-	max = 0;
+	head_util(&i, &max, &head);
 	tmp = stack;
 	while (tmp)
 	{
 		pairs[i] = base->pairs(stack, tmp);
-		if (pairs[max] <= pairs[i])
+		if (pairs[max] < pairs[i] || (pairs[max] == pairs[i]
+				&& head > tmp->order))
+		{
+			head = tmp->order;
 			max = i;
+		}
 		++i;
 		tmp = tmp->down;
 	}
-	while (max)
-	{
-		stack = stack->down;
-		--max;
-	}
 	free(pairs);
-	return (stack->order);
+	return (head_util2(stack, max));
 }
 
 t__int_b	edit_keep_in(t_base *base)

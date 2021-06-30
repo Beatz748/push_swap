@@ -108,6 +108,12 @@ t__int_b		find_head_gt(t_stack *stack);
 t__int_b		count_pairs_index(t_stack *stack, t_stack *start);
 t__int_b		index_method(t_stack *a, t__int_b *index);
 
+/*---------------------------SORTING---------------------------*/
+
+t__int_b		perform_move(t_base *base);
+t__int_b		sorting(t_base *base);
+t__int_b		sort(t_base *base, int count_nums);
+
 /*----------------------------UTILS----------------------------*/
 
 int				write_error(int ret);
@@ -131,6 +137,7 @@ t__int_b		b_pa(t_stack **stack_a, t_stack **stack_b, t_commands **cmds);
 t__int_b		b_pb(t_stack **stack_a, t_stack **stack_b, t_commands **cmds);
 t__int_b		b_sa(t_stack **stack_b, t_commands **cmds);
 t__int_b		b_sb(t_stack **stack_b, t_commands **cmds);
+t__int_b		b_ss(t_stack **stack_a, t_stack **stack_b, t_commands **cmds);
 
 /*------------------------COMMANDS LOW-------------------------*/
 

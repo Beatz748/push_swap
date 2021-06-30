@@ -57,7 +57,6 @@ t__int_b	b_reverse_rotate(t_stack **stack)
 t__int_b	b_push_util(t_stack **stack_from, t_stack **stack_into)
 {
 	t_stack	*second_from;
-	t_stack	*second_into;
 
 	second_from = (*stack_from)->down;
 	*stack_into = *stack_from;

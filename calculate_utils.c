@@ -3,7 +3,6 @@
 t__int_b	find_near_order(t_stack *stack, t__int_b target)
 {
 	t__int64_b	ret;
-	t__int64_b	tmp;
 	t_stack		*safe;
 
 	ret = B_INT64_MAX;

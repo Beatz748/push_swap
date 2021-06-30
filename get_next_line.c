@@ -10,7 +10,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	y = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	if (!(str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!(str))
 		return (NULL);
 	while (s1[i])
 	{
@@ -25,7 +26,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_strchr(const char *s, int c)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i <= ft_strlen(s))
@@ -54,6 +55,7 @@ int		get_next_line(int fd, char **line)
 		return (0);
 	while ((sr = read(fd, buf, 1)) > 0)
 	{
+		// sr = read(fd, buf, 0);
 		if (*buf != '\n')
 		{
 			tmp = *line;

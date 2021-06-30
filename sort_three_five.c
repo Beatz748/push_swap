@@ -39,7 +39,6 @@ t__int_b	sort_five(t_base *base)
 
 t__int_b	sorting_two_three(t_base *base)
 {
-	t__int_b	ret;
 	t_stack		*last;
 	t_stack		**stack;
 

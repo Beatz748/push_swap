@@ -5,7 +5,7 @@ char	*b_stpncpy(char *dst, const char *src, size_t len)
 	int	i;
 
 	i = -1;
-	while (++i < len && src[i])
+	while (++i < (int)len && src[i])
 		dst[i] = src[i];
 	while (dst[i])
 	{
@@ -49,7 +49,7 @@ int	write_error(int ret)
 	else if (ret == ALREADY_SORTED)
 		b_stpncpy(buf + 17, " ALREADY SORTED\n", 17);
 	length = ft_strlen(buf);
-	if (write(STDERR_FILENO, buf, length) != length)
+	if (write(STDERR_FILENO, buf, length) != (int)length)
 		return (FAIL);
 	return (ret);
 }

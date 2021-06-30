@@ -19,6 +19,6 @@ t_bool	prepare_sa(t_base *base)
 t__int_b	perform_sa(t_base *base)
 {
 	b_sa(&base->stack_a, &base->cmds);
-	edit_keep_in(base);
+	keep_in_index(base->stack_a, base->head, base);
 	return (SUCCESS);
 }

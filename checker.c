@@ -22,14 +22,14 @@ t__int_b	perform_cmd(t_base *base, char *str)
 {
 	if (!ft_strncmp("ra", str, ft_strlen(str)))
 		return (b_ra(&base->stack_a, &base->cmds));
-	else if (!ft_strncmp("rra", str, ft_strlen(str)))
-		return (b_rra(&base->stack_a, &base->cmds));
 	else if (!ft_strncmp("rb", str, ft_strlen(str)))
 		return (b_rb(&base->stack_b, &base->cmds));
-	else if (!ft_strncmp("rrb", str, ft_strlen(str)))
-		return (b_rrb(&base->stack_b, &base->cmds));
 	else if (!ft_strncmp("rr", str, ft_strlen(str)))
 		return (b_rr(&base->stack_a, &base->stack_b, &base->cmds));
+	else if (!ft_strncmp("rra", str, ft_strlen(str)))
+		return (b_rra(&base->stack_a, &base->cmds));
+	else if (!ft_strncmp("rrb", str, ft_strlen(str)))
+		return (b_rrb(&base->stack_b, &base->cmds));
 	else if (!ft_strncmp("rrr", str, ft_strlen(str)))
 		return (b_rrr(&base->stack_a, &base->stack_b, &base->cmds));
 	else if (!ft_strncmp("sa", str, ft_strlen(str)))

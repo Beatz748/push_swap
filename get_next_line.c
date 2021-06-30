@@ -38,7 +38,14 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-int		get_next_line(int fd, char **line)
+void	gnl_util(char **tmp, char *buf, char **line)
+{
+	*tmp = *line;
+	*line = ft_strjoin(*line, buf);
+	free(*tmp);
+}
+
+int	get_next_line(int fd, char **line)
 {
 	char	buf[2];
 	int		sr;
@@ -48,22 +55,20 @@ int		get_next_line(int fd, char **line)
 	buf[1] = '\0';
 	if (!line)
 		return (-1);
-	if (!(*line = malloc(1)))
+	*line = malloc(1);
+	if (!(*line))
 		return (-1);
 	**line = 0;
-	if (fd < 0 || !line || read(fd, buf, 0) < 0)
+	if (fd < 0 || !line)
 		return (0);
-	while ((sr = read(fd, buf, 1)) > 0)
+	sr = read(fd, buf, 1);
+	while (sr > 0)
 	{
-		// sr = read(fd, buf, 0);
 		if (*buf != '\n')
-		{
-			tmp = *line;
-			*line = ft_strjoin(*line, buf);
-			free(tmp);
-		}
+			gnl_util(&tmp, buf, line);
 		else
 			break ;
+		sr = read(fd, buf, 1);
 	}
 	return (sr);
 }
